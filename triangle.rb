@@ -13,10 +13,55 @@
 # and
 #   about_triangle_project_2.rb
 #
+#def triangle(a, b, c)
+#	return :equilateral if (a == b) &&	(b == c)
+#	return :isosceles if (a == b) || (b == c) || (a == c)
+#	return :scalene if (a != b) || (b != c) || (a != c)
+#end
+
+#def triangle(a, b, c)
+#  raise TriangleError, "My Message" if a+b+c < 3
+#  raise TriangleError, "My Message2" if a+b-c (<0 || != a || !=b)
+#
+#  
+#  if a!=b && b!=c && a!=c then
+#	  return :scalene
+#  elsif a!=b || b!=c then
+#    return :isosceles
+#	else a==b && b==c
+#    return :equilateral
+#	end
+#	
+#end
+
 def triangle(a, b, c)
-  # WRITE THIS CODE
+  raise TriangleError, "My Message" if a+b+c < 3
+  raise TriangleError, "My Message2" if (a+b<=c) || (b+c<=a) || (a+c<=b)
+ 
+  
+  if a!=b && b!=c && a!=c then
+	  return :scalene
+  elsif a!=b || b!=c then
+    return :isosceles
+	else a==b && b==c
+    return :equilateral
+	end
+	
 end
 
+#def triangle(a, b, c)
+#	(a == b) &&	(b == c) ? :equilateral : (a == b) || (b == c) || (a == c) ? :isosceles : (a != b) || (b != c) || (a != c) ? :scalene
+#end
+
+#def triangle(a, b, c)
+#	(a == b) &&	(b == c) ? :equilateral : (a == b) || (b == c) || (a == c) ? :isosceles : (a != b) || (b != c) || (a != c) ? :scalene
+#end
+#
+
+#if a==0 && b==0 && c==0
+#    raise TriangleError, "why the exception happened"
+#  end
+#  
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
 end
