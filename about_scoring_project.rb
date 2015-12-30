@@ -29,64 +29,120 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
+#def score(dice)
+#  roll = Hash.new(0)
+#  result = 0
+#  
+#  dice.each do |i|
+#    if i == 1 then
+#     roll[1] += 1
+#    elsif i == 2 then
+#     roll[2] += 1
+#    elsif i == 3 then
+#     roll[3] += 1
+#    elsif i == 4 then
+#     roll[4] += 1
+#    elsif i == 5 then
+#     roll[5] += 1
+#    elsif i == 6 then
+#     roll[6] += 1
+#    end
+#  end
+#
+#  if roll.empty? then
+#    result == 0
+#  elsif roll[2] >= 3 then
+#    result += 200
+#  elsif roll[3] >= 3 then
+#    result += 300
+#  elsif roll[4] >= 3 then
+#    result += 400
+#  elsif roll[6] >= 3 then
+#    result += 600
+#  end
+# 
+#  
+#  if roll[1] >= 3 then
+#    result += 1000
+#    roll[1] -= 3
+#  elsif roll[5] >= 3 then
+#    result += 500
+#    roll[5] -= 3 
+#  end
+#  
+#  if roll[1] < 3 then
+#    result += roll[1] * 100
+#  end
+#  
+#  if roll[5] < 3 then
+#    result += roll[5] * 50
+#  end
+#
+#  return result
+#end
+#
+#def accumulate(dice)
+#  result = Hash.new(0)
+#  dice.each do |i|
+#    result[i] += 1 #llenan el hash de información
+#  end
+#  result
+#end
+
 def score(dice)
-  
-  @roll = Hash.new(0)
   result = 0
   
-  def score_for_trio(x)
-     result += x * 100
-  end
-  
-  dice.each do |i|
-    if i == 1 then
-     @roll[1] += 1
-    elsif i == 2 then
-     @roll[2] += 1
-    elsif i == 3 then
-     @roll[3] += 1
-    elsif i == 4 then
-     @roll[4] += 1
-    elsif i == 5 then
-     @roll[5] += 1
-    elsif i == 6 then
-     @roll[6] += 1
-    end
-  end
+  #variable de instancia accesible entre los metodos
+  @roll = accumulate(dice) 
 
-  if @roll.empty? then
-    result == 0
-  end
-  
-  score_for_trio(@roll)
-
-    
-
-  
-  
+  result += calculate_score_for_one
+  result += calculate_score_for_five
+  result += calculate_score_for_others
  
-  
-  if @roll[1] >= 3 then
-    result += 1000
-    @roll[1] -= 3
-  elsif @roll[5] >= 3 then
-    result += 500
-    @roll[5] -= 3 
-  end
-  
-  if @roll[1] < 3 then
-    result += @roll[1] * 100
-  end
-  
-  if @roll[5] < 3 then
-    result += @roll[5] * 50
-  end
-  
-
-    
   return result
 end
+def calculate_score_for_five
+    result = 0
+    if set_trio(5) then
+     result += 500
+     @roll[5] -= 3 
+    end
+    if @roll[5] < 3 then
+      result += @roll[5] * 50
+    end
+    result
+end
+def calculate_score_for_one
+    result = 0
+    if set_trio(1) then
+      result += 1000
+      @roll[1] -= 3
+    end
+    if @roll[1] < 3 then
+      result += @roll[1] * 100
+    end
+    result
 
+end
+def calculate_score_for_others
+    result = 0
+    [2, 3, 4, 6].each do |i|
+    result += i * 100 if set_trio(i)
+    end
+    result
+
+end
+def accumulate(dice)
+  result = Hash.new(0)
+  dice.each do |i|
+    result[i] += 1 #llenan el hash de información
+  end
+  result
+end
+
+def set_trio (number)
+  @roll[number] >= 3
+end
 
 class AboutScoringProject < Neo::Koan
   def test_score_of_an_empty_list_is_zero
