@@ -30,8 +30,63 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
-  # You need to write this method
+  
+  @roll = Hash.new(0)
+  result = 0
+  
+  def score_for_trio(x)
+     result += x * 100
+  end
+  
+  dice.each do |i|
+    if i == 1 then
+     @roll[1] += 1
+    elsif i == 2 then
+     @roll[2] += 1
+    elsif i == 3 then
+     @roll[3] += 1
+    elsif i == 4 then
+     @roll[4] += 1
+    elsif i == 5 then
+     @roll[5] += 1
+    elsif i == 6 then
+     @roll[6] += 1
+    end
+  end
+
+  if @roll.empty? then
+    result == 0
+  end
+  
+  score_for_trio(@roll)
+
+    
+
+  
+  
+ 
+  
+  if @roll[1] >= 3 then
+    result += 1000
+    @roll[1] -= 3
+  elsif @roll[5] >= 3 then
+    result += 500
+    @roll[5] -= 3 
+  end
+  
+  if @roll[1] < 3 then
+    result += @roll[1] * 100
+  end
+  
+  if @roll[5] < 3 then
+    result += @roll[5] * 50
+  end
+  
+
+    
+  return result
 end
+
 
 class AboutScoringProject < Neo::Koan
   def test_score_of_an_empty_list_is_zero
