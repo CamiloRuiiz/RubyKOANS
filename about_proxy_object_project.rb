@@ -17,9 +17,11 @@ class Proxy
     @object = target_object
     # ADD MORE CODE HERE
   end
-
+  
   # WRITE CODE HERE
 end
+
+
 
 # The proxy object should pass the following Koan:
 #
