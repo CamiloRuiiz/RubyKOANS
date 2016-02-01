@@ -16,8 +16,23 @@ class Proxy
   def initialize(target_object)
     @object = target_object
     # ADD MORE CODE HERE
+      
   end
-
+  def channel=(number)
+    @object.channel = number
+  end
+  def channel
+    @object.channel
+  end
+  def power
+    @object.power
+  end
+  def on?
+    @object.on?
+  end
+  def messages
+    [:power, :channel=]
+  end
   # WRITE CODE HERE
 end
 
